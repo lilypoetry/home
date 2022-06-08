@@ -18,7 +18,8 @@ class ArticleController extends AbstractController
             'articles' => $articleRepository->findAll(),
             'article' => $articleRepository->find(4),
             'post' => $articleRepository->findOneBy(['title' => 'Titre_7'], ['created_at' => 'DESC']),
-            'posts' =>$articleRepository->findBy(['created_at' => DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2022-06-08 08:24:33')])
+            'posts' =>$articleRepository->findBy(['created_at' => DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2022-06-08 08:24:33')]),
+            'results' => $articleRepository->findByTitleOrDescription('Titre_122', 'Description_2')
         ]);
     }
 }

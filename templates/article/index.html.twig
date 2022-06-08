@@ -24,4 +24,12 @@
         {% endfor %}
     </ul>
 
+    {# Affichage un ou plusieurs enregistrements avec une requète DQL perso #}
+    <ul>
+        {% for result in results %}
+            <li>{{ result.title }} - {{ result.description }} - {{ result.createdAt|date('d.m.Y') }}</li>
+        {% else %}
+            <p>Aucun résultat</p>
+        {% endfor %}
+    </ul>
 {% endblock %}
