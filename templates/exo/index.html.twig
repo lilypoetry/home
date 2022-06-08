@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ExoController!{% endblock %}
+
+{% block body %}
+    <h1>Ma nouvelle page !</h1>
+    {# <a href="{{ path('app_image', { id: random(1, 100) }) }}">Affiche mon image</a> #}
+    <a href="{{ path('app_image', { id: number_rand }) }}">Affiche mon image</a>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Titre de ma page{% endblock %}
+
+{% block body %}
+    <h1>Contenu de ma page</h1>
+
+    {# Génère un lien avec le nom de la route #}
+    {# <a href="{{ path('app_home') }}">Home</a> #}
+
+    {# 
+        Génère un lien avec le nom de la route et 
+        transit une valeur vers celle-ci
+    #}
+    <a href="{{ path('app_home', { id: 12, prenom: 'Sena' }) }}">Home & Value</a>
+
+    {# Affiche des variables transmis par le controller #}
+    {{ variable }}
+    <p>{{ brouette }}</p>
+    <p>J'ai {{ age }} ans</p>
+
+    {{dump(users)}}
+
+    {# Equivalent à foreach #}
+    {% for user in users %}
+        <p>{{ user }}</p>
+    {% else %}
+        Tableau vide
+    {% endfor %}
+
+    {# Afficher des intervals #}
+    {% for i in 0..10 %}
+        {% if i != 6 %}
+            <p>{{ i }}</p>
+        {% endif %}
+    {% endfor %}
+
+    {# Affiche l'année de la date en cours #}
+    {{ 'now'|date('d-m-Y') }}
+
+
+    {# Compter le nombre d'élements d'un tableau #}
+    {{ users|length }}
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{# Charge une feuille de style que pour cette vue #}
+{% block stylesheets %}
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <a href="{{ path ('accueil') }}">Accueil</a>
+
+    <h1>{{ id }} - {{ prenom }}</h1>
+
+    {# /vars?nom=Smith #}
+    <a href="{{ path('vars', { nom: 'Smith'}) }}">Ma nouvelle page</a>
+
+    <a href="{{ path('page', { page}) }}">Ma nouvelle photo</a>
+{% endblock %}

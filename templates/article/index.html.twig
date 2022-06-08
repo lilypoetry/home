@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArticleController!{% endblock %}
+
+{% block body %}
+
+    {# Affichage de plusieurs enregistrements #}
+    <ul>
+        {% for article in articles %}
+            <li>{{ article.title }} {{ article.createdAt|date('d-m-Y') }}</li>
+        {% endfor %}
+    </ul>
+
+    {# Affichage d'un enregistrement selon son ID #}
+    <p>{{ article.title }} - {{ article.description }} - {{ article.createdAt|date('d.m.Y') }}</p>
+
+    {# Affichage d'un enregistrement selon son des critères #}
+    {{ post.title }} - {{ post.description }} - {{ post.createdAt|date('d.m.Y') }}
+
+    {# Affichage un ou plusieurs enregistrements #}
+    <ul>
+        {% for post in posts %}
+            <li>{{ post.title }} {{ post.createdAt|date('d-m-Y') }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

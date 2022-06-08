@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon titre{% endblock %}
+
+{% block body %}
+    <h2>Hello la nouvelle page !</h2>
+    <p>Agent {{ nom }}</p>
+
+    {# Affiche une image depuis le dossier "public" {{ absolute_url(asset('imgs/sea.jpg'))}} #}
+    <img src="{{ asset('imgs/sea.jpg')|imagine_filter('thumbnail') }}" alt="L'océan">
+    
+    <p>Pour afficher cette image sur votre site, coller cette URL : 
+    {{ absolute_url(asset('imgs/sea.jpg'))}} </p>
+
+{% endblock %}

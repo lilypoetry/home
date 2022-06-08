@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma nouvelle page !{% endblock %}
+
+{% block body %}
+    <h2>Soyez zen avec le yoga</h2>
+    <img src="{{ asset('imgs/'~ image)|imagine_filter('vignette') }}" alt="Lotus">
+{% endblock %}
