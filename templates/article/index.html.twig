@@ -7,7 +7,7 @@
     {# Affichage de plusieurs enregistrements #}
     <ul>
         {% for article in articles %}
-            <li>{{ article.title }} {{ article.createdAt|date('d-m-Y') }}</li>
+            <li>{{ article.title }} {{ article.createdAt|date('d-m-Y')}}, {{ article.author.name }}</li>
         {% endfor %}
     </ul>
 
