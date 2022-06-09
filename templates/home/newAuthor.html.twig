@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout un nouvel auteur{% endblock %}
+
+{% block body %}
+    
+    <div class="container w-50 py-5">
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        
+        {# Ouvrir un formulaire un twig #}
+        {{ form_start(form) }}
+
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+            {{ form_errors(form.name) }}
+
+            <button>Enregister</button>
+
+        {{ form_end(form) }}
+    </div>
+    
+
+{% endblock %}

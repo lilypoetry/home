@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\AuthorFormType;
 use App\Repository\ArticleRepository;
 use DateTime;
 use DateTimeImmutable;
@@ -9,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AuthorRepository;
+use App\Entity\Author;
+use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends AbstractController
 {
@@ -29,6 +32,37 @@ class ArticleController extends AbstractController
     {
         return $this->render('article/relations.html.twig', [
             'authors' => $authorRepository->findAll()
+        ]);
+    }
+
+    // Création une route
+    #[Route('/author/new', 'author_new')]
+    public function newAuthor(Request $request, AuthorRepository $authorRepository): Response
+    {
+        // Déclare un objet vide dépendant de l'entité "Author"
+        $author = new Author();
+        // dump($author);
+
+        //Crée le formulaire
+        $form = $this->createForm(AuthorFormType::class, $author);
+
+        // Remplis l'objet "$author" des données du formulaire
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // dump($author);
+            $authorRepository->add($author, true);
+
+            // Flash message success
+            $this->addFlash('success', 'Votre auteur à bien été enregistré !');
+
+            // Ecraser l'ancien formulaire
+            $author = new Author();
+            $this->createForm(AuthorFormType::class, $author);
+        }
+
+        return $this->render('home/newAuthor.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }
