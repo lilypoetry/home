@@ -4,12 +4,26 @@
 
 {% block body %}
 
+    <form method="GET"> {# ?numbers=3 #}
+        <label for="numbers">Nombre d'articles par page</label>
+        <input type="hidden" name="page" value="{{ app.request.query.get('page', 1) }}">
+        <select name="numbers" id="numbers" onchange="this.form.submit();">
+            <option value="5">Choisissez une option</option>
+            <option value="5">5 par page</option>
+            <option value="3">3 par page</option>
+            <option value="1">1 par page</option>
+        </select>
+    </form>
+
     {# Affichage de plusieurs enregistrements #}
     <ul>
         {% for article in articles %}
             <li>{{ article.title }} {{ article.createdAt|date('d-m-Y')}}, {{ article.author.name }}</li>
         {% endfor %}
     </ul>
+
+    {# Affiche la numérotations des pages #}
+    {{ knp_pagination_render(articles) }}
 
     {# Affichage d'un enregistrement selon son ID #}
     <p>{{ article.title }} - {{ article.description }} - {{ article.createdAt|date('d.m.Y') }}</p>

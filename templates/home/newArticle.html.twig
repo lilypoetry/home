@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout un nouvel article{% endblock %}
+
+{% block body %}
+    
+    <div class="container w-50 py-5">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        
+        {{ form(form) }}
+    </div>
+    
+
+{% endblock %}
