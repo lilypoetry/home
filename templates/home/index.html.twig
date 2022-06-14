@@ -12,8 +12,11 @@
 
     <h1>{{ id }} - {{ prenom }}</h1>
 
-    {# /vars?nom=Smith #}
-    <a href="{{ path('vars', { nom: 'Smith'}) }}">Ma nouvelle page</a>
+    {# Affiche le lien, seulement si le visiteur est connecté #}
+    {% if app.user is not null %}
+        {# /vars?nom=Smith #}
+        <a href="{{ path('vars', { nom: 'Smith' }) }}">Ma nouvelle page</a>
+    {% endif %}
 
-    <a href="{{ path('page', { page}) }}">Ma nouvelle photo</a>
+    {# <a href="{{ path('page', { page }) }}">Ma nouvelle photo</a> #}
 {% endblock %}

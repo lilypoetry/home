@@ -44,6 +44,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/vars', name: 'vars')]
+    #[IsGranted('ROLE_USER')] // pour proteger les access
     public function vars(Request $request): Response
     {
         // $nom = $_GET
