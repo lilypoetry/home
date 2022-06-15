@@ -42,6 +42,9 @@ class Author
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $updated_at;
 
+    #[ORM\OneToOne(inversedBy: 'author', targetEntity: User::class, cascade: ['persist', 'remove'])]
+    private $owner;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -130,6 +133,18 @@ class Author
     public function setUpdatedAt(?\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }

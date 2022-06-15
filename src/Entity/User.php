@@ -32,6 +32,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\OneToOne(mappedBy: 'owner', targetEntity: Author::class, cascade: ['persist', 'remove'])]
+    private $author;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -141,6 +144,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Author $author): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($author === null && $this->author !== null) {
+            $this->author->setOwner(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($author !== null && $author->getOwner() !== $this) {
+            $author->setOwner($this);
+        }
+
+        $this->author = $author;
 
         return $this;
     }

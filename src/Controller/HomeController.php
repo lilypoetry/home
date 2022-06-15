@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,9 +45,10 @@ class HomeController extends AbstractController
     }
 
     #[Route('/vars', name: 'vars')]
-    #[IsGranted('ROLE_USER')] // pour proteger les access
+    // #[IsGranted('ROLE_USER')] // pour donner l'access que aux utilisateurs
     public function vars(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Cette page est accessible aux administrateurs');
         // $nom = $_GET
         $nom = $request->query->get('nom');
         // dd($nom);

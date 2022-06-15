@@ -13,26 +13,55 @@ use App\Repository\ArticleRepository;
 use App\Repository\AuthorRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use DateTimeImmutable;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends AbstractController
 {
     #[Route('/article', name: 'app_article')]
+    #[IsGranted('ROLE_USER')]
     public function index(ArticleRepository $articleRepository, PaginatorInterface $paginatorInterface, Request $request): Response
     {
+        // $this->getUser() permet de récupérer les données d'un user connecté
+        $roles = $this->getUser()->getRoles();
+        
+        // Vérifie si le rôle est soit ROLE_ADMIN soit ROLE_MODERATOR
+        if (in_array('ROLE_ADMIN', $roles) || in_array('ROLE_MODERATOR', $roles)) {
+            $selectAllArticles = $articleRepository->findAll();            
+        }
+        else {
+            // dd($this->getUser());
+            // $selectAllArticles = $this->getUser()->getAuthor()->getArticles();
+            $selectAllArticles = $articleRepository->findBy(['author' => $this->getUser()->getAuthor()]);            
+        }
+
+        // dd($selectAllArticles);
+
          // Création de la pagination de résultats
          $articles = $paginatorInterface->paginate(
-            $articleRepository->findAll(), // Requête SQL/DQL
+            $selectAllArticles, // Requête SQL/DQL
             $request->query->getInt('page', 1), // Numérotation des pages
             $request->query->getInt('numbers', 5) // Nombre d'enregistrements par page
         );
 
         return $this->render('article/index.html.twig', [
             'articles' => $articles,
-            'article' => $articleRepository->find(4),
+            'article' => $articleRepository->find(15),
             'post' => $articleRepository->findOneBy(['title' => 'Titre_7'], ['created_at' => 'DESC']),
             'posts' =>$articleRepository->findBy(['created_at' => DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2022-06-08 08:24:33')]),
             'results' => $articleRepository->findByTitleOrDescription('Titre_122', 'Description_2')
+        ]);
+    }
+
+    #[Route('/article/delete/{id}', name: 'article_delete', requirements: ['id' => '\d+'])]
+    #[IsGranted('ROLE_USER')]
+    public function delete(Article $article): Response
+    {
+        // Utilisation du voter nommé ArticleVoter
+        $this->denyAccessUnlessGranted('ARTICLE_DELETE', $article);
+
+        return $this->render('article/delete.html.twig', [
+            'article' => $article
         ]);
     }
 

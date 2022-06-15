@@ -18,7 +18,10 @@
     {# Affichage de plusieurs enregistrements #}
     <ul>
         {% for article in articles %}
-            <li>{{ article.title }} {{ article.createdAt|date('d-m-Y')}}, {{ article.author.name }}</li>
+            <li>
+                {{ article.title }} ({{ article.createdAt|date('d.m.Y') }}, {{ article.author.name }})
+                <a href="{{ path('article_delete', { id: article.id }) }}">Supprimer</a>
+            </li>
         {% endfor %}
     </ul>
 

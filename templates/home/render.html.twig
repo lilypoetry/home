@@ -12,4 +12,12 @@
     <p>Pour afficher cette image sur votre site, coller cette URL : 
     {{ absolute_url(asset('imgs/sea.jpg'))}} </p>
 
+    {% if is_granted('ROLE_MODERATOR') %}
+        <button class="btn btn-warning">Modifier ce profil</button>
+    {% endif %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <button class="btn btn-danger">Supprimer ce profil</button>
+    {% endif %}
+
 {% endblock %}
